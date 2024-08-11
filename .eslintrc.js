@@ -30,9 +30,9 @@ module.exports = {
         ],
         'react/react-in-jsx-scope': 'off', // Adjust based on React version
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        'no-unused-vars': 'error', // Enforce no unused variables
         '@typescript-eslint/no-unused-vars': 'error',
         'no-console': 'warn',
+        'no-unused-vars': ['error', { varsIgnorePattern: 'ServiceProvider' }],
     },
     settings: {
         react: {

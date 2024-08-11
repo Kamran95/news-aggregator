@@ -1,15 +1,14 @@
-import { axiosInstance } from './api';
-
+// import { axiosInstance } from './api';
+import { MainLayout } from './layout';
+import { Home } from './pages';
 function App() {
-    const handleApiCall = () => {
-        axiosInstance.get('');
-    };
+    // const handleApiCall = () => {
+    //     axiosInstance.get('');
+    // };
     return (
-        <div className="App">
-            <button onClick={handleApiCall} className="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">
-                ...
-            </button>
-        </div>
+        <MainLayout>
+            <Home />
+        </MainLayout>
     );
 }
 
