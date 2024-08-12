@@ -8,7 +8,7 @@ export const MainLayout = ({ children }: Props) => {
     return (
         <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="mt-20 flex-grow">{children}</main>
+            <main className="mb-20 mt-40 flex w-full items-center justify-center sm:mt-32">{children}</main>
             <Footer />
         </div>
     );

@@ -4,7 +4,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Helvetica', 'Avenir', 'Arial', 'sans-serif'],
+                sans: ['Domine', 'sans-serif'],
             },
             borderWidth: {
                 1: '1px',
@@ -15,7 +15,6 @@ export default {
                 charcoal: '#333',
                 'brand-light': '#007EC720',
                 'custom-gray': '#D9D9D9',
-                orange: '#FF6E00',
             },
             textColor: {
                 brand: '#1B9988',

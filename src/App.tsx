@@ -1,13 +1,19 @@
-// import { axiosInstance } from './api';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { MainLayout } from './layout';
-import { Home } from './pages';
+import { routeConfig } from './constants';
 function App() {
-    // const handleApiCall = () => {
-    //     axiosInstance.get('');
-    // };
     return (
         <MainLayout>
-            <Home />
+            <Router>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        {routeConfig.map((route, index) => (
+                            <Route key={index} path={route.path} element={route.element} />
+                        ))}
+                    </Routes>
+                </Suspense>
+            </Router>
         </MainLayout>
     );
 }

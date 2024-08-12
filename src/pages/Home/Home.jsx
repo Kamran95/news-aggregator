@@ -1,22 +1,24 @@
+import { HomeSectionHeader } from 'src/components';
 import { HomeGuardianSection, HomeNYTSection, HomeNewsSection } from '../../modules';
 
 export const Home = () => {
     return (
-        <div className="container mx-auto p-4">
+        <div className="container px-8">
             <div className="grid grid-cols-1 gap-6">
-                <HomeNewsSection />
-                <HomeNYTSection />
-                <HomeGuardianSection />
-                {/* {newsData.map((news, index) => (
-                    <NewsCard
-                        key={index}
-                        title={news.title}
-                        description={news.description}
-                        url={news.url}
-                        imageUrl={news.imageUrl}
-                    />
-                ))} */}
+                <section className="min-h-[400px]">
+                    <HomeSectionHeader route="/the-news" heading="The News" />
+                    <HomeNewsSection />
+                </section>
+                <section>
+                    <HomeSectionHeader route="/nyt-news" heading="New York Times" />
+                    <HomeNYTSection />
+                </section>
+                <section>
+                    <HomeSectionHeader route="/guardian-news" heading="The Guardian News" />
+                    <HomeGuardianSection />
+                </section>
             </div>
         </div>
     );
 };
+export default Home;

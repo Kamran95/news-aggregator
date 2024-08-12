@@ -9,7 +9,7 @@ interface Multimedia {
     copyright: string;
 }
 
-export interface nytArticle {
+export interface NytArticleTypes {
     section: string;
     subsection: string;
     title: string;

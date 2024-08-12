@@ -6,7 +6,7 @@ import { NewsCard } from '../../components';
 import { LeftRightScrollController } from 'src/components/LeftRightScrollController';
 import { getYesterdayDate } from 'src/utils';
 
-export const HomeNewsSection = () => {
+export const TheNews = () => {
     const contentRef = useRef(null);
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
     const { fetchData, data } = useAxios<{ articles: NewsArticle[] }>(
@@ -24,23 +24,25 @@ export const HomeNewsSection = () => {
     }, [data]);
 
     return (
-        <div className="relative w-full">
+        <div className="container relative w-full">
             <LeftRightScrollController contentRef={contentRef} classLeftButton=" -left-5" classRightButton=" -right-5" />
-            <div ref={contentRef} className="hide-scrollbar mt-2 flex h-[680px] w-full flex-row gap-4 py-8 pe-4">
+            <div className="grid grid-cols-4 gap-x-4">
                 {newsArticles
                     ?.filter((val) => val.title !== '[Removed]')
                     ?.map((article) => {
                         return (
-                            <NewsCard
-                                key={article.title}
-                                title={article.title}
-                                description={article.description}
-                                url={article.url}
-                                imageUrl={article.urlToImage}
-                            />
+                            <div ref={contentRef} key={article.title} className="hide-scrollbar h-[680px]">
+                                <NewsCard
+                                    title={article.title}
+                                    description={article.description}
+                                    url={article.url}
+                                    imageUrl={article.urlToImage}
+                                />
+                            </div>
                         );
                     })}
             </div>
         </div>
     );
 };
+export default TheNews;
