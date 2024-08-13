@@ -17,7 +17,6 @@ newsAxiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) 
     config.params = {
         ...config.params,
         apiKey: process.env.REACT_APP_NEWS_API_KEY,
-        // country: 'en',
     };
     return config;
 });

@@ -4,8 +4,8 @@ import { MainLayout } from './layout';
 import { routeConfig } from './constants';
 function App() {
     return (
-        <MainLayout>
-            <Router>
+        <Router>
+            <MainLayout>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Routes>
                         {routeConfig.map((route, index) => (
@@ -13,8 +13,8 @@ function App() {
                         ))}
                     </Routes>
                 </Suspense>
-            </Router>
-        </MainLayout>
+            </MainLayout>
+        </Router>
     );
 }
 

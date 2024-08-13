@@ -7,7 +7,7 @@ type UseAxiosReturn<T> = {
     data: T | null;
     loading: boolean;
     error: string | null;
-    fetchData: () => Promise<void>;
+    fetchData: (params?: AxiosRequestConfig) => Promise<void>;
 };
 
 export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosRequestConfig = {}): UseAxiosReturn<T> => {
@@ -15,31 +15,34 @@ export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosR
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchData = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            let response: AxiosResponse<T>;
-            switch (type) {
-                case ServiceProviders.NEWS:
-                    response = await newsAxiosInstance.get(url, options);
-                    break;
-                case ServiceProviders.GUARDIANS:
-                    response = await guardianAxiosInstance.get(url, options);
-                    break;
+    const fetchData = useCallback(
+        async (params: AxiosRequestConfig = {}) => {
+            setLoading(true);
+            setError(null);
+            try {
+                let response: AxiosResponse<T>;
+                switch (type) {
+                    case ServiceProviders.NEWS:
+                        response = await newsAxiosInstance.get(url, { ...options, ...params });
+                        break;
+                    case ServiceProviders.GUARDIANS:
+                        response = await guardianAxiosInstance.get(url, { ...options, ...params });
+                        break;
 
-                default:
-                    response = await nytAxiosInstance.get(url, options);
-                    break;
+                    default:
+                        response = await nytAxiosInstance.get(url, { ...options, ...params });
+                        break;
+                }
+                setData(response.data);
+            } catch (err) {
+                const axiosError = err as AxiosError;
+                setError(axiosError.response ? (axiosError.response.data as string) : axiosError.message);
+            } finally {
+                setLoading(false);
             }
-            setData(response.data);
-        } catch (err) {
-            const axiosError = err as AxiosError;
-            setError(axiosError.response ? (axiosError.response.data as string) : axiosError.message);
-        } finally {
-            setLoading(false);
-        }
-    }, [url, options]);
+        },
+        [url, options],
+    );
 
     return { data, loading, error, fetchData };
 };

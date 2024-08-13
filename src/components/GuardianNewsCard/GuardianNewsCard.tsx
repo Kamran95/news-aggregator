@@ -10,7 +10,7 @@ export const GuardianNewsCard = ({ title, pillarName, url }: Props) => {
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="hover:bg-orange-50 flex min-w-[400px] cursor-pointer flex-col items-start justify-between p-4 shadow-md">
+            className="hover:bg-orange-50 flex h-[80%] min-w-[400px] cursor-pointer flex-col items-start justify-between p-4 shadow-md">
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{title}</h5>
 
             <p className="mb-3 text-sm font-normal text-gray-700">
