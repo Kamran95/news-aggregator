@@ -11,3 +11,29 @@ export interface GuardianArticleDetails {
     pillarId: string;
     pillarName: string;
 }
+interface Edition {
+    id: string;
+    webTitle: string;
+    webUrl: string;
+    apiUrl: string;
+    code: string;
+}
+
+export interface SectionTypes {
+    id: string;
+    webTitle: string;
+    webUrl: string;
+    apiUrl: string;
+    editions: Edition[];
+}
+
+interface Response {
+    status: string;
+    userTier: string;
+    total: number;
+    results: SectionTypes[];
+}
+
+export interface GuardianSectionApiResponse {
+    response: Response;
+}

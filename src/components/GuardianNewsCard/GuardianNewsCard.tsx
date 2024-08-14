@@ -14,7 +14,7 @@ export const GuardianNewsCard = ({ title, pillarName, url }: Props) => {
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{title}</h5>
 
             <p className="mb-3 text-sm font-normal text-gray-700">
-                Category: <span className="bg-orange-200 rounded-lg p-2">{pillarName}</span>
+                Category: <span className="bg-orange-200 rounded-lg p-2">{pillarName ?? 'Category not found'}</span>
             </p>
         </a>
     );

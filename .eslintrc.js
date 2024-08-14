@@ -20,23 +20,26 @@ module.exports = {
         ecmaVersion: 2021,
         sourceType: 'module',
     },
+    settings: {
+        'import/resolver': {
+            typescript: {
+                alwaysTryTypes: true,
+                project: './tsconfig.json',
+            },
+        },
+        react: {
+            version: 'detect',
+        },
+    },
     plugins: ['react', '@typescript-eslint', 'prettier'],
     rules: {
-        'prettier/prettier': [
-            'error',
-            {
-                endOfLine: 'auto', // Adjust as needed
-            },
-        ],
+        'prettier/prettier': 'off',
         'react/react-in-jsx-scope': 'off', // Adjust based on React version
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-unused-vars': 'error',
         'no-console': 'warn',
         'no-unused-vars': ['error', { varsIgnorePattern: 'ServiceProvider' }],
-    },
-    settings: {
-        react: {
-            version: 'detect',
-        },
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
     },
 };

@@ -5,3 +5,5 @@ export * from './Dropdown';
 export * from './HomeSectionHeader';
 export * from './GuardianNewsCard';
 export * from './GuardianPageHeader';
+export * from './SearchInputField';
+export * from './NYTPageHeader';

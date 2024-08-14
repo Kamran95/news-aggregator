@@ -1,3 +1,4 @@
+import { DropdownOptionsTypes } from 'src/types/genericTypes';
 import { Dropdown } from '../../components';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +8,11 @@ export const Navbar = () => {
         // Navigate to a different route
         navigate('/');
     };
+    const dropdownOptions: DropdownOptionsTypes[] = [
+        { label: 'The News', onClick: () => navigate('/the-news') },
+        { label: 'New York Times', onClick: () => navigate('/nyt-news') },
+        { label: 'The Guardians', onClick: () => navigate('/guardian-news') },
+    ];
     return (
         <nav className="border-orange-400 fixed start-0 top-0 z-20 mx-auto flex w-full items-center justify-center border-b bg-white">
             <div className="container flex flex-wrap items-center justify-between px-8 py-2">
@@ -19,7 +25,7 @@ export const Navbar = () => {
 
                 <ul className="flex py-4 ps-2 font-medium">
                     <li>
-                        <Dropdown label="Resources" />
+                        <Dropdown label="Resources" options={dropdownOptions} />
                     </li>
                 </ul>
             </div>

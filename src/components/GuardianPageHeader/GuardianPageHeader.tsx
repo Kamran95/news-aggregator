@@ -1,31 +1,53 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
+import Datepicker from 'react-tailwindcss-datepicker';
+import { DateRange } from 'src/types/genericTypes';
+import { SearchInputField } from 'src/components';
+import RadioDropdown from '../RadioDropdown/RadioDropdown';
+import { SectionTypes } from 'src/types';
 
 interface Props {
-    route: string;
-    heading: string;
+    value?: DateRange;
+    handleValueChange: (newValue: DateRange) => void;
+    searchValue: string;
+    setSearchValue: Dispatch<SetStateAction<string>>;
+    setSectionValue: Dispatch<SetStateAction<string>>;
+    guardianSections: SectionTypes[];
+    sectionValue: string;
 }
 
-export const GuardianPageHeader = ({ heading }: Props) => {
+export const GuardianPageHeader = ({
+    handleValueChange,
+    value,
+    searchValue,
+    setSearchValue,
+    guardianSections,
+    setSectionValue,
+    sectionValue,
+}: Props) => {
     return (
-        <div className="mb-6 flex w-full items-center justify-between p-4 text-gray-700 shadow">
-            <h1 className="m-0 text-xl text-gray-700">{heading}</h1>
-            <div className="flex items-center justify-end">
-                <div className="relative max-w-sm">
-                    <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                        <svg
-                            className="h-4 w-4 text-gray-500 dark:text-gray-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                        </svg>
-                    </div>
-                    <input
-                        id="default-datepicker"
-                        type="text"
-                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                        placeholder="Select date"
+        <div className="mb-6 grid w-full grid-cols-1 items-center justify-between gap-x-3 p-4 text-gray-700 shadow md:grid-cols-4">
+            <h1 className="m-0 whitespace-nowrap text-xl text-gray-700">The Guardian News</h1>
+            <div className="col-span-4 flex w-full flex-wrap items-center justify-end md:col-span-3">
+                <div className="mx-2">
+                    <RadioDropdown
+                        value={sectionValue}
+                        label="Select Section"
+                        setOptionValue={setSectionValue}
+                        options={guardianSections.map((section) => ({ id: section.id, label: section.webTitle }))}
+                    />
+                </div>
+
+                <div className="mr-2 w-40">
+                    <SearchInputField value={searchValue} setValue={setSearchValue} />
+                </div>
+                <div className="w-72">
+                    <Datepicker
+                        inputClassName={
+                            'border border-gray-300 relative transition-all duration-300 py-2.5 pl-4 pr-14 w-full border-gray-300 focus-visible:outline-none  rounded-lg tracking-wide font-light text-sm placeholder-gray-400 bg-white focus:ring disabled:opacity-40 disabled:cursor-not-allowed focus:border-orange-500 focus:ring-orange-500/20'
+                        }
+                        primaryColor={'orange'}
+                        value={value as any}
+                        onChange={(date: any) => handleValueChange(date as DateRange)}
                     />
                 </div>
             </div>

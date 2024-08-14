@@ -1,11 +1,13 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { ChevronDown } from 'src/Icons';
+import { DropdownOptionsTypes } from 'src/types/genericTypes';
 
 interface Props {
     label: string;
+    options: DropdownOptionsTypes[];
 }
 
-export const Dropdown: FC<Props> = ({ label }) => {
+export const Dropdown: FC<Props> = ({ label, options }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -45,11 +47,13 @@ export const Dropdown: FC<Props> = ({ label }) => {
                     id="dropdownNavbar"
                     className="absolute -right-[40px] z-10 mt-2 w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow">
                     <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownNavbarLink">
-                        <li>
-                            <a href="#" className="hover:bg-orange-100 block px-4 py-2">
-                                Dashboard
-                            </a>
-                        </li>
+                        {options.map((option) => (
+                            <li key={option.label} className="cursor-pointer">
+                                <a onClick={option.onClick} className="hover:bg-orange-100 block px-4 py-2">
+                                    {option.label}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             )}
