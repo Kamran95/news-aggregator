@@ -28,6 +28,7 @@ export const EverythingNews: FC<Props> = ({ sources }) => {
         `everything`,
         ServiceProviders.NEWS,
         { params: { page, pageSize: 10, sortBy: 'publishedAt', from: getYesterdayDate(), q: 'top' } },
+        true,
     );
 
     useEffect(() => {

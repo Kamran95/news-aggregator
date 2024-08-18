@@ -26,6 +26,7 @@ export const TopHeadlines: FC<Props> = ({ sources }) => {
         `top-headlines`,
         ServiceProviders.NEWS,
         { params: { page, pageSize: 10, sortBy: 'publishedAt', from: getYesterdayDate(), q: 'top' } },
+        true,
     );
 
     useEffect(() => {
@@ -59,7 +60,6 @@ export const TopHeadlines: FC<Props> = ({ sources }) => {
     }) => {
         const params = new URLSearchParams();
         if (page || pageNo) params.append('page', pageNo ? pageNo + '' : page + '');
-        console.log({ category, categoryValue, source, sourceValue });
 
         params.append('q', query === '' || query ? query : search);
         if (source || sourceValue) params.append('sources', source === '' || source ? source : sourceValue);

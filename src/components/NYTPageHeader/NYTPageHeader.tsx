@@ -14,8 +14,8 @@ export const NYTPageHeader = ({ setSectionValue, sectionValue, searchValue, setS
     return (
         <div className="mb-6 grid w-full grid-cols-1 items-center justify-between gap-x-3 p-4 text-gray-700 shadow md:grid-cols-4">
             <h1 className="m-0 whitespace-nowrap text-xl text-gray-700">New York Times</h1>
-            <div className="col-span-4 flex w-full flex-wrap items-center justify-end md:col-span-3">
-                <div className="mx-2">
+            <div className="col-span-4 flex w-full flex-wrap items-center justify-start md:col-span-3 md:justify-end">
+                <div className="mr-2 mt-1 md:mx-2 md:mt-0">
                     <RadioDropdown
                         value={sectionValue}
                         label="Select Section"
@@ -23,7 +23,7 @@ export const NYTPageHeader = ({ setSectionValue, sectionValue, searchValue, setS
                         options={NYTSectionOptions}
                     />
                 </div>
-                <div className="w-40">
+                <div className="mt-1 w-40 md:mt-0">
                     <SearchInputField value={searchValue} setValue={setSearchValue} />
                 </div>
             </div>

@@ -1,24 +1,29 @@
-import { useState, useCallback } from 'react';
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { useState, useCallback, useRef } from 'react';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ServiceProviders } from '../constants';
 import { newsAxiosInstance, nytAxiosInstance, guardianAxiosInstance } from '../api';
+import { enqueueSnackbar } from 'notistack';
 
 type UseAxiosReturn<T> = {
     data: T | null;
     loading: boolean;
-    error: string | null;
     fetchData: (params?: AxiosRequestConfig) => Promise<void>;
+    showError?: boolean;
 };
+export const useAxios = <T>(
+    url: string,
+    type: ServiceProviders,
+    options: AxiosRequestConfig = {},
+    showError = false,
+): UseAxiosReturn<T> => {
+    const timeoutId = useRef<NodeJS.Timeout | null>(null);
 
-export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosRequestConfig = {}): UseAxiosReturn<T> => {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
 
     const fetchData = useCallback(
         async (params: AxiosRequestConfig = {}) => {
             setLoading(true);
-            setError(null);
             try {
                 let response: AxiosResponse<T>;
                 switch (type) {
@@ -35,8 +40,22 @@ export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosR
                 }
                 setData(response.data);
             } catch (err) {
-                const axiosError = err as AxiosError;
-                setError(axiosError.response ? (axiosError.response.data as string) : axiosError.message);
+                const axiosError = err as any;
+                if (axiosError?.response?.data) {
+                    if (type === ServiceProviders.NEWS) {
+                        const message = axiosError?.response?.data?.message;
+                        if (showError && message) {
+                            if (timeoutId.current) {
+                                clearTimeout(timeoutId.current);
+                            }
+                            timeoutId.current = setTimeout(() => {
+                                enqueueSnackbar('The News: ' + message?.split?.('.')?.[0], {
+                                    variant: 'error',
+                                });
+                            }, 1000);
+                        }
+                    }
+                }
             } finally {
                 setLoading(false);
             }
@@ -44,5 +63,5 @@ export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosR
         [url],
     );
 
-    return { data, loading, error, fetchData };
+    return { data, loading, fetchData };
 };

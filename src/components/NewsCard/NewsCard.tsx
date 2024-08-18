@@ -14,7 +14,7 @@ export const NewsCard = ({ title, imageUrl, description, url }: Props) => {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="my-2 flex h-[520px] min-w-[360px] cursor-pointer flex-col items-start shadow-md hover:bg-orange-50">
+                className="my-2 flex h-[520px] min-w-[360px] cursor-pointer flex-col items-start border border-gray-100 shadow-md hover:bg-orange-50">
                 <div className="flex w-full">
                     <img
                         className="h-80 max-h-80 min-h-80 w-full rounded-t-lg object-cover"

@@ -11,7 +11,7 @@ export const TheNews = () => {
     const [sources, setNewsSources] = useState<DropdownOptions[]>([]);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-    const { fetchData, data } = useAxios<{ sources: NewsSource[] }>(`sources`, ServiceProviders.NEWS);
+    const { fetchData, data } = useAxios<{ sources: NewsSource[] }>(`sources`, ServiceProviders.NEWS, {}, true);
 
     useEffect(() => {
         fetchData();

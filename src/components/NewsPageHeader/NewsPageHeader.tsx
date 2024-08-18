@@ -45,7 +45,7 @@ export const NewsPageHeader = forwardRef(
                         </div>
                     ) : null}
                     {!sectionValue ? (
-                        <div className="mr-2 md:mx-2">
+                        <div className="mr-2 mt-1 md:mx-2 md:mt-0">
                             <RadioDropdown
                                 value={sourceValue}
                                 label="Select Source"
@@ -55,7 +55,7 @@ export const NewsPageHeader = forwardRef(
                         </div>
                     ) : null}
 
-                    <div className="ml-2 w-40">
+                    <div className="mt-1 w-40 md:ml-2 lg:mt-0">
                         <SearchInputField value={search} setValue={setSearch} />
                     </div>
                 </div>

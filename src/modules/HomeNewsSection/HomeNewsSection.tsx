@@ -13,6 +13,8 @@ export const HomeNewsSection = () => {
     const { fetchData, data, loading } = useAxios<{ articles: NewsArticle[] }>(
         `top-headlines?q=top&from=${getYesterdayDate()}&sortBy=publishedAt&pageSize=10`,
         ServiceProviders.NEWS,
+        {},
+        true,
     );
     useEffect(() => {
         fetchData();
