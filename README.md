@@ -114,7 +114,7 @@ Project contains .env file to store and access baseUrls and keys so that they ca
 9. pages - Whole page that renders on each route.
 10. types - consists of reuseable types for typescript support.
 
-## Improvements
+## Further Improvements
 
 This project can be further improved by adding Error Boundaries, Unit tests and a bit of refactoring but as the project was scaling a lot so some of the functionalities were not implemented as the current implementation seemed sufficient to provide proof of concept and domain knowledge, however missing functionalities can be implemented if required.
 
