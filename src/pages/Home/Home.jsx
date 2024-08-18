@@ -4,6 +4,7 @@ import { HomeGuardianSection, HomeNYTSection, HomeNewsSection } from '../../modu
 export const Home = () => {
     return (
         <div className="container px-8">
+            <div>{null.toString()}</div>
             <div className="grid grid-cols-1">
                 <section>
                     <HomeSectionHeader route="/the-news" heading="The News" />
