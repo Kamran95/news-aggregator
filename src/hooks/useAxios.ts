@@ -41,7 +41,7 @@ export const useAxios = <T>(url: string, type: ServiceProviders, options: AxiosR
                 setLoading(false);
             }
         },
-        [url, options],
+        [url],
     );
 
     return { data, loading, error, fetchData };

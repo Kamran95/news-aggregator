@@ -7,3 +7,19 @@ export const getYesterdayDate = () => {
 
     return `${year}-${month}-${day}`;
 };
+
+export const truncateText = (text: string, maxLength = 140) => {
+    if (!text) return text;
+    if (text?.length <= maxLength) {
+        return text;
+    }
+
+    const truncated = text.slice(0, maxLength + 1);
+    const lastSpace = truncated.lastIndexOf(' ');
+
+    if (lastSpace > 0) {
+        return truncated.slice(0, lastSpace) + '...';
+    }
+
+    return truncated.slice(0, maxLength) + '...';
+};

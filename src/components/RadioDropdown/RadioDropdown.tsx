@@ -43,9 +43,9 @@ const RadioDropdown: FC<Props> = ({ label, options, setOptionValue, value }) => 
             <button
                 onClick={toggleDropdown}
                 id="dropdownRadioButton"
-                className="focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 inline-flex items-center whitespace-nowrap rounded-lg border border-gray-300 px-5 py-2 text-center text-sm text-gray-400 focus:outline-none focus:ring-4"
+                className="dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 inline-flex items-center whitespace-nowrap rounded-lg border border-gray-300 px-5 py-2 text-center text-sm text-gray-400 focus:outline-none focus:ring-4 focus:ring-orange-300"
                 type="button">
-                {label}
+                {value && value !== 'us' ? value : label}
                 <svg
                     className="ms-3 h-2.5 w-2.5"
                     aria-hidden="true"
@@ -65,16 +65,16 @@ const RadioDropdown: FC<Props> = ({ label, options, setOptionValue, value }) => 
             {isOpen && (
                 <div
                     id="dropdownDefaultRadio"
-                    className="absolute z-10 mt-2 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700">
+                    className="dark:divide-gray-600 dark:bg-gray-700 absolute z-10 mt-2 w-48 divide-y divide-gray-100 rounded-lg bg-white shadow">
                     <input
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={handleSearchChange}
-                        className="focus:ring-orange-500 focus:border-orange-500 block w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus-visible:outline-none"
+                        className="block w-full rounded-lg border border-gray-300 p-2 text-sm text-gray-900 focus:border-orange-500 focus:ring-orange-500 focus-visible:outline-none"
                     />
                     <ul
-                        className="max-h-40 space-y-3 overflow-y-scroll p-3 text-sm text-gray-700 dark:text-gray-200"
+                        className="dark:text-gray-200 max-h-40 space-y-3 overflow-y-scroll p-3 text-sm text-gray-700"
                         aria-labelledby="dropdownRadioButton">
                         {filteredOptions.length > 0 ? (
                             filteredOptions.map((option) => (
@@ -87,18 +87,18 @@ const RadioDropdown: FC<Props> = ({ label, options, setOptionValue, value }) => 
                                             value={option.id}
                                             name="colored-radio"
                                             onChange={(e) => setOptionValue(e.target.value)}
-                                            className="text-orange-500 focus:ring-orange-500 dark:focus:ring-orange-600 h-4 w-4 border-gray-300 bg-gray-100 focus:ring-2 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                                            className="dark:focus:ring-orange-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 h-4 w-4 border-gray-300 bg-gray-100 text-orange-500 focus:ring-2 focus:ring-orange-500"
                                         />
                                         <label
                                             htmlFor={`radio-${option.id}`}
-                                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                            className="dark:text-gray-300 ms-2 text-sm font-medium text-gray-900">
                                             {option.label}
                                         </label>
                                     </div>
                                 </li>
                             ))
                         ) : (
-                            <li className="text-gray-500 dark:text-gray-400">No options found</li>
+                            <li className="dark:text-gray-400 text-gray-500">No options found</li>
                         )}
                     </ul>
                 </div>

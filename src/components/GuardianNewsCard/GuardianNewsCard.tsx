@@ -10,11 +10,11 @@ export const GuardianNewsCard = ({ title, pillarName, url }: Props) => {
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="hover:bg-orange-50 flex h-[80%] min-w-[400px] cursor-pointer flex-col items-start justify-between p-4 shadow-md">
+            className="flex h-[80%] min-w-[380px] cursor-pointer flex-col items-start justify-between p-4 shadow-md hover:bg-orange-50">
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{title}</h5>
 
             <p className="mb-3 text-sm font-normal text-gray-700">
-                Category: <span className="bg-orange-200 rounded-lg p-2">{pillarName ?? 'Category not found'}</span>
+                Category: <span className="rounded-lg bg-orange-200 p-2">{pillarName ?? 'Category not found'}</span>
             </p>
         </a>
     );

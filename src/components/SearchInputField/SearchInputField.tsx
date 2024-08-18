@@ -28,7 +28,7 @@ export const SearchInputField = ({ value, setValue, placeholder = 'Search' }: Pr
                 onChange={(e) => setValue(e.target.value)}
                 type="search"
                 id="default-search"
-                className="focus:ring-orange-500 focus:border-orange-500 block w-full rounded-lg border border-gray-300 px-4 py-2 ps-10 text-sm text-gray-900 focus-visible:outline-none"
+                className="block w-full rounded-lg border border-gray-300 px-4 py-2 ps-10 text-sm text-gray-900 focus:border-orange-500 focus:ring-orange-500 focus-visible:outline-none"
                 placeholder={placeholder}
                 required
             />

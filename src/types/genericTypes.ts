@@ -6,3 +6,7 @@ export interface DropdownOptionsTypes {
     label: string;
     onClick: () => void;
 }
+export interface DropdownOptions {
+    id: string;
+    label: string;
+}

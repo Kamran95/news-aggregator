@@ -1,29 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { useAxios, useDebounce } from '../../hooks';
-import { ServiceProviders } from '../../constants';
-import { GuardianArticleDetails, GuardianSectionApiResponse, SectionTypes } from '../../types';
-import { GuardianNewsCard, GuardianPageHeader } from 'src/components';
+import { useAxios } from 'src/hooks';
+import { ServiceProviders } from 'src/constants';
+import { GuardianArticleDetails, GuardianSectionApiResponse, SectionTypes } from 'src/types';
+import { GuardianNewsCard, GuardianPageHeader, Tag } from 'src/components';
 import { DateRange } from 'src/types/genericTypes';
+import { BackdropLoader } from 'src/components/BackdropLoader';
+import { NoRecordsFoundCard } from 'src/components/NoRecordsFoundCard';
 
 export const GuardianNews = () => {
+    const headerRef: any = useRef(null);
+
     const [page, setPage] = useState<number>(1);
     const [search, setSearch] = useState<string>('');
     const [sectionValue, setSectionValue] = useState<string>('');
     const [dateRange, setDateRange] = useState<DateRange>({ startDate: null, endDate: null });
 
-    const searchValue = useDebounce(search);
-
     const [guardianNewsArticles, setGuardianNewsArticles] = useState<GuardianArticleDetails[]>([]);
     const [guardianSections, setGuardianSections] = useState<SectionTypes[]>([]);
 
-    const { fetchData, data } = useAxios<{ response: { results: GuardianArticleDetails[] } }>(
+    const { fetchData, data, loading } = useAxios<{ response: { results: GuardianArticleDetails[] } }>(
         'search',
         ServiceProviders.GUARDIANS,
         {
             params: {
-                page,
+                page: 1,
                 ['page-size']: 25,
                 sortBy: 'publishedAt',
             },
@@ -33,6 +35,7 @@ export const GuardianNews = () => {
         'sections',
         ServiceProviders.GUARDIANS,
     );
+
     const handleFetchData = ({
         date,
         query,
@@ -44,14 +47,19 @@ export const GuardianNews = () => {
         pageNo?: number;
         section?: string;
     }) => {
+        const params = new URLSearchParams();
+        if (page || pageNo) params.append('page', pageNo ? pageNo + '' : page + '');
+        if (query || search) params.append('q', query ? query : search);
+        if (section || sectionValue) params.append('section', section ? section : sectionValue);
+        if ((date?.startDate || dateRange.startDate) && date?.startDate !== null) {
+            params.append('from-date', (date?.startDate ? date.startDate : dateRange.startDate) ?? '');
+        }
+        if ((date?.endDate || dateRange.endDate) && date?.endDate !== null) {
+            params.append('to-date', (date?.endDate ? date.endDate : dateRange.endDate) ?? '');
+        }
+        const paramsObject: { [key: string]: string } = Object.fromEntries(params.entries());
         fetchData({
-            params: {
-                ['from-date']: (date ? date.startDate : dateRange.startDate) ?? undefined,
-                ['to-date']: (date ? date.endDate : dateRange.endDate) ?? undefined,
-                q: (query ? query : searchValue) ?? undefined,
-                section: (section ? section : searchValue) ?? undefined,
-                page: pageNo ?? page,
-            },
+            params: paramsObject,
         });
     };
 
@@ -73,18 +81,19 @@ export const GuardianNews = () => {
         }
     }, [data]);
 
-    useEffect(() => {
+    const handleChangeSectionValue = (section: string) => {
         setGuardianNewsArticles([]);
+        setSectionValue(section);
         setPage(1);
-        handleFetchData({ section: sectionValue, pageNo: 1 });
-    }, [sectionValue]);
+        handleFetchData({ section, pageNo: 1 });
+    };
 
-    useEffect(() => {
+    const handleChangeQuery = (query: string) => {
         setGuardianNewsArticles([]);
+        setSearch(query);
         setPage(1);
-        setDateRange({ startDate: null, endDate: null });
-        handleFetchData({ query: searchValue, pageNo: 1 });
-    }, [searchValue]);
+        handleFetchData({ query, pageNo: 1 });
+    };
 
     const handleFetchMoreData = () => {
         const nextPage = page + 1;
@@ -97,39 +106,61 @@ export const GuardianNews = () => {
         setGuardianNewsArticles([]);
     };
 
+    const handleClearSearch = () => {
+        if (headerRef.current) {
+            headerRef.current.clearSearchQuery();
+        }
+        handleChangeQuery('');
+    };
     return (
-        <div className="container relative w-full px-8">
+        <div className="container w-full px-8">
+            <BackdropLoader isLoading={loading} />
+
             <GuardianPageHeader
+                ref={headerRef}
                 sectionValue={sectionValue}
                 guardianSections={guardianSections}
-                setSearchValue={setSearch}
-                searchValue={search}
+                setSearchValue={handleChangeQuery}
                 value={dateRange}
-                setSectionValue={setSectionValue}
+                setSectionValue={handleChangeSectionValue}
                 handleValueChange={handleDateChange}
             />
-            <div className="">
-                <InfiniteScroll
-                    dataLength={guardianNewsArticles.length}
-                    next={handleFetchMoreData}
-                    hasMore={true}
-                    loader={<h4>Loading...</h4>}
-                    className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
-                    endMessage={null}>
-                    {guardianNewsArticles?.map((article, index) => {
-                        return (
-                            <div key={article.id + index} className="hide-scrollbar h-[260px]">
-                                <GuardianNewsCard
-                                    key={article.id}
-                                    title={article.webTitle}
-                                    pillarName={article.pillarName}
-                                    url={article.webUrl}
-                                />
-                            </div>
-                        );
-                    })}
-                </InfiniteScroll>
+            <div className="flex items-center gap-x-4">
+                <Tag label={sectionValue} onClose={() => handleChangeSectionValue('')} />
+                <Tag label={search} onClose={handleClearSearch} />
+                {dateRange.startDate ? (
+                    <Tag
+                        label={`${dateRange.startDate} - ${dateRange.endDate}`}
+                        onClose={() => handleDateChange({ startDate: null, endDate: null })}
+                    />
+                ) : null}
             </div>
+            {!guardianNewsArticles?.length && !loading ? (
+                <NoRecordsFoundCard heading="No Records Found!" />
+            ) : (
+                <div>
+                    <InfiniteScroll
+                        dataLength={guardianNewsArticles.length}
+                        next={handleFetchMoreData}
+                        hasMore={true}
+                        loader={null}
+                        className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+                        endMessage={null}>
+                        {guardianNewsArticles?.map((article, index) => {
+                            return (
+                                <div key={article.id + index} className="hide-scrollbar h-[260px]">
+                                    <GuardianNewsCard
+                                        key={article.id}
+                                        title={article.webTitle}
+                                        pillarName={article.pillarName}
+                                        url={article.webUrl}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </InfiniteScroll>
+                </div>
+            )}
         </div>
     );
 };

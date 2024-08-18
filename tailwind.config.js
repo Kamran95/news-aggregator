@@ -14,8 +14,6 @@ export default {
                 brand: '#2cb14b',
                 secondary: '#F6F7F8',
                 charcoal: '#333',
-                'brand-light': '#007EC720',
-                'custom-gray': '#D9D9D9',
             },
             textColor: {
                 brand: '#1B9988',

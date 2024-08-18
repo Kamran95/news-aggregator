@@ -14,7 +14,7 @@ export const Navbar = () => {
         { label: 'The Guardians', onClick: () => navigate('/guardian-news') },
     ];
     return (
-        <nav className="border-orange-400 fixed start-0 top-0 z-20 mx-auto flex w-full items-center justify-center border-b bg-white">
+        <nav className="fixed start-0 top-0 z-20 mx-auto flex w-full items-center justify-center border-b border-orange-400 bg-white">
             <div className="container flex flex-wrap items-center justify-between px-8 py-2">
                 <a href="" onClick={redirectToHome} className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="/logo.jpg" className="h-9 w-9" alt="news Logo" />
@@ -25,7 +25,7 @@ export const Navbar = () => {
 
                 <ul className="flex py-4 ps-2 font-medium">
                     <li>
-                        <Dropdown label="Resources" options={dropdownOptions} />
+                        <Dropdown label="Sources" options={dropdownOptions} />
                     </li>
                 </ul>
             </div>

@@ -1,3 +1,5 @@
+import { truncateText } from 'src/utils';
+
 interface Props {
     title: string;
     description: string;
@@ -12,18 +14,18 @@ export const NewsCard = ({ title, imageUrl, description, url }: Props) => {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:bg-orange-50 min-w-[400px] cursor-pointer shadow-md">
+                className="my-2 flex h-[520px] min-w-[360px] cursor-pointer flex-col items-start shadow-md hover:bg-orange-50">
                 <div className="flex w-full">
                     <img
-                        className="h-80 max-h-80 min-h-80 w-full rounded-t-lg object-cover md:rounded-none md:rounded-s-lg"
+                        className="h-80 max-h-80 min-h-80 w-full rounded-t-lg object-cover"
                         src={imageUrl ?? '/no-image.png'}
                         alt=""
                     />
                 </div>
 
-                <div className="flex w-full flex-col justify-between p-4 leading-normal">
-                    <h5 className="my-2 text-xl font-bold tracking-tight text-gray-900">{title}</h5>
-                    <p className="mb-3 text-sm font-normal text-gray-700">{description}</p>
+                <div className="mt-4 flex w-full flex-col justify-between px-2 leading-normal">
+                    <h5 className="my-2 text-lg font-bold tracking-tight text-gray-900">{truncateText(title, 80)}</h5>
+                    <p className="mb-3 text-sm font-normal text-gray-700">{truncateText(description)}</p>
                 </div>
             </a>
         </>

@@ -35,3 +35,5 @@ export const NewCategoryArray = [
     { id: 'sports', label: 'Sports' },
     { id: 'technology', label: 'Technology' },
 ];
+
+export const NewsTabHeader = ['Top Headlines', 'Everything'];
